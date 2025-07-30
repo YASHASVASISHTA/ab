@@ -1,4 +1,14 @@
 // Enhanced Course Data with Deep Content and Comprehensive MCQs
+// Simple hash function to generate consistent IDs
+function generateHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(16).slice(0, 6).toUpperCase();
+}
 const courseData = {
   modules: [
     {
@@ -1189,6 +1199,10 @@ function renderCertificate() {
   const completedChapters = Object.keys(currentUser.progress).length
   const isCompleted = completedChapters === totalChapters
 
+  // Generate consistent certificate ID based on user data
+  const certIdBase = `${currentUser.email || currentUser.name}-${currentUser.company || "salesacademy"}`;
+  const certificateId = `SA-${generateHash(certIdBase)}`;
+
   if (isCompleted) {
     container.innerHTML = `
             <div class="certificate">
@@ -1209,7 +1223,7 @@ function renderCertificate() {
                         <li>✓ Pipeline Management</li>
                     </ul>
                     <p><strong>Completion Date:</strong> ${new Date().toLocaleDateString()}</p>
-                    <p><strong>Certificate ID:</strong> SA-${Date.now().toString().slice(-6)}</p>
+                    <p><strong>Certificate ID:</strong> ${certificateId}</p>
                 </div>
                 
             </div>
@@ -1231,7 +1245,6 @@ function renderCertificate() {
         `
   }
 }
-
 function downloadCertificate() {
   alert("Certificate download feature would be implemented with PDF generation in production.")
 }
