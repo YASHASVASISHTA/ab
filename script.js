@@ -1225,7 +1225,9 @@ function renderCertificate() {
                     <p><strong>Completion Date:</strong> ${new Date().toLocaleDateString()}</p>
                     <p><strong>Certificate ID:</strong> ${certificateId}</p>
                 </div>
-                
+                 <div class="certificate-footer" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 0.9em; color: #666;">
+                    <p>This is a preview of your certificate. The official certificate will be sent to your email (${currentUser.email || 'registered email address'}) within 24 hours.</p>
+                </div>
             </div>
         `
   } else {
